@@ -33,4 +33,3 @@
 .vscode/*
 out/*
 CMakePresets.json
-DirectorySort/.vscode/settings.json
