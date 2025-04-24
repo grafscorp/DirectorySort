@@ -1,0 +1,49 @@
+[
+    {"images":
+    [
+        {
+            "formats":
+                [
+                "*.png",
+                "*.jpeg",
+                "*.jpg"
+                ]
+        },
+        {
+            "exceptions":[]
+        },
+        {
+            "name_directory":"Images"
+        }
+
+    ]
+    },
+    {
+        "video":
+        [
+            {
+                "formats":[
+                    "*.mp4",
+                    "*.wav"
+                ]
+            }
+        ]
+    },
+    {
+        "other":
+        [
+            {
+                "formats":
+                [
+                    "*"
+                ]
+            },
+            {
+                "name_directory":"Others"
+            }
+        ]
+    }
+
+]
+
+
