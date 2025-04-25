@@ -7,11 +7,13 @@ set(DirectorySortSourcePath src)
 set(HEADERS_FILES 
     ${DirectorySortIncludePath}/DirectorySort.hpp
     ${DirectorySortIncludePath}/DirectoryTypeConfig.hpp
+    ${DirectorySortIncludePath}/ConfigParser.hpp
 )
 
 set(SOURCE_FILES
     ${DirectorySortSourcePath}/DirectorySort.cpp
     ${DirectorySortSourcePath}/DirectoryTypeConfig.cpp
+    ${DirectorySortSourcePath}/ConfigParser.cpp
 )
 
 add_library(DirectorySortLib 
