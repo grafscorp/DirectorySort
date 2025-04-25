@@ -14,7 +14,7 @@ public:
     ConfigParser(/* args */);
     ~ConfigParser();
     //Parse data from config file
-    DirectoryTypeConfig parse(const std::string data);
+    std::vector<DirectoryTypeConfig> parse(const std::string data);
 };
 
 
