@@ -47,7 +47,19 @@ void DirectorySort::create_default_architecture_directory() {
 }
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directory() {
-    //TODO 
+    //TODO LOGER
+    std::ifstream configFile(NAME_DEFAULT_CONFIG);
+    if(!configFile.is_open())
+    {
+        throw CANT_OPEN_DEF_CONFIG_FILE;
+        //create_default_architecture_directory();
+    }
+    std::string configFileData;
+    std::stringstream bufferData;
+    bufferData << configFile.rdbuf();
+    configFileData = bufferData.str();
+    configFile.close();
+    return configParser->parse(configFileData);
 }
 
 void DirectorySort::create_local_architecture_directory() {
