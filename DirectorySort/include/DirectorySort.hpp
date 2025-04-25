@@ -5,12 +5,12 @@
 #include <fstream>
 #include <filesystem>
 #include <DirectoryTypeConfig.hpp>
-
+#include <ConfigParser.hpp>
 
 #pragma region ErrorCodes 
 
 #define NOT_DIRECTORY 1010
-
+#define LOCAL_CONFIG_DOEST_EXIST 1050
 #pragma endregion ErrorCodes
 
 #define NAME_DEFAULT_CONFIG "default_config.json"
@@ -30,11 +30,12 @@ public:
 
 private:
     void create_default_architecture_directory();
-    void get_default_archirecture_directory();
+    std::vector<DirectoryTypeConfig> get_default_archirecture_directory();
     void create_local_architecture_directory();
-    void get_local_architecture_diretory(const std::filesystem::path& dir);
+    std::vector<DirectoryTypeConfig> get_local_architecture_diretory(const std::filesystem::path& dir);
 
 
+    ConfigParser* configParser ;
 
 };
 
