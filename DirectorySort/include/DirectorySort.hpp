@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <sstream>
 #include <DirectoryTypeConfig.hpp>
 #include <ConfigParser.hpp>
 
@@ -11,6 +12,8 @@
 
 #define NOT_DIRECTORY 1010
 #define LOCAL_CONFIG_DOEST_EXIST 1050
+#define CANT_OPEN_CONFIG_FILE 2050
+#define CANT_OPEN_DEF_CONFIG_FILE 2040
 #pragma endregion ErrorCodes
 
 #define NAME_DEFAULT_CONFIG "default_config.json"
