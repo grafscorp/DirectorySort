@@ -67,13 +67,24 @@ void DirectorySort::create_local_architecture_directory() {
 }
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(const std::filesystem::path& dir) {
-    //TODO
+    //TODO LOGER
     for(const auto& entry : std::filesystem::directory_iterator(dir))
     {
         if (entry.path().filename() == NAME_LOCAL_CONFIG) 
         {
+            std::ifstream configFile(entry.path());
+            if(!configFile.is_open())
+            {
+                throw CANT_OPEN_CONFIG_FILE;
+            }
+            //Read data from file to string
+            std::string configFileData;
+            std::stringstream bufferData;
+            bufferData << configFile.rdbuf();
+            configFileData = bufferData.str();
+            configFile.close();
             
-            return configParser->parse();
+            return configParser->parse(configFileData);
             
         }
     }
