@@ -10,6 +10,14 @@ set(HEADERS_FILES
     ${DirectorySortIncludePath}/ConfigParser.hpp
 )
 
+
+set(JSON_LIB_PATH  ${DirectorySortIncludePath}/nlohmann)
+set(JSON_INCLUDES 
+    ${JSON_LIB_PATH}/json.hpp
+    ${JSON_LIB_PATH}/json_fwd.hpp
+    )
+
+
 set(SOURCE_FILES
     ${DirectorySortSourcePath}/DirectorySort.cpp
     ${DirectorySortSourcePath}/DirectoryTypeConfig.cpp
@@ -19,8 +27,8 @@ set(SOURCE_FILES
 add_library(DirectorySortLib 
     ${SOURCE_FILES}
     ${HEADERS_FILES}
-
+    ${JSON_INCLUDES}
 )
 
-target_include_directories(DirectorySortLib PRIVATE ${DirectorySortIncludePath})
+target_include_directories(DirectorySortLib PRIVATE ${DirectorySortIncludePath} ${JSON_INCLUDES})
 
