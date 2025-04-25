@@ -6,6 +6,8 @@
 #include <nlohmann/json.hpp>
 #include <DirectoryTypeConfig.hpp>
 
+#define NOT_VALID_DATA 1310
+
 class ConfigParser
 {
 private:

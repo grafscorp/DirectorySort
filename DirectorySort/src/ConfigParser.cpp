@@ -20,16 +20,17 @@ std::vector<DirectoryTypeConfig> ConfigParser::parse(const std::string data) {
     {
         DirectoryTypeConfig typeConfig;
         nlohmann::json typeObj = resJson.at(i);//Get Type 
-        typeConfig.name =  typeObj.at(2)["name_directory"]; //Get Directory Name
+        typeConfig.directory_name =  typeObj.at(2)["name_directory"]; //Get Directory Name
         nlohmann::json formats = typeObj.at(0)["formats"];//Get Item Type's Formats 
 
         for (int i = 0; i < formats.size(); i++) 
         {
             typeConfig.formats .push_back(formats.at(i));
         }
+        if(typeConfig.is_empty()) continue;
         
         ConfigDatas.push_back(typeConfig);
     }
-
+    if(ConfigDatas.empty()) throw NOT_VALID_DATA;
     return ConfigDatas;
 }
