@@ -23,7 +23,6 @@ void DirectorySort::sort_directory(const std::string path) {
         throw NOT_DIRECTORY;
         return; 
     }
-    //TODO
 
     //All config rules
     std::vector<DirectoryTypeConfig> configSort;
@@ -40,9 +39,12 @@ void DirectorySort::sort_directory(const std::string path) {
     //Прохожусь по всем типам сортировки 
     for (const auto configType : configSort)
     {
+        //Директория, которая создается для переменщения определенных файлов
         std::string typeDirectory = path + "/" +configType.directory_name;
         //TODO LOGER
         std::cout << "Create path : " << typeDirectory << std::endl;
+        
+        //TODO Сделать проверку если существует директория
         if(!std::filesystem::create_directory(typeDirectory))
         {
             //Cant create directory
@@ -50,7 +52,7 @@ void DirectorySort::sort_directory(const std::string path) {
             std::cout << "Cant create directory " << typeDirectory << std::endl;
             continue;
         }
-        std::cout << "OK\n";
+        //Поиск нужных файлов и их перемещение в нужную директорию
         
         
     }
@@ -97,7 +99,7 @@ std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(
         if (entry.path().filename() == NAME_LOCAL_CONFIG) 
         {
             //TODO LOGER 
-            std::cout << "Find local config : " << entry.path().filename()<<std::endl;
+            std::cout << "Finded local config : " << entry.path().filename()<<std::endl;
 
             std::ifstream configFile(entry.path());
             if(!configFile.is_open())
