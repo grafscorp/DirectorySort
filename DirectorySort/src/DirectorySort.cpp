@@ -3,6 +3,7 @@
 DirectorySort::DirectorySort(/* args */)
 {
     configParser = new ConfigParser();
+
 }
 
 DirectorySort::~DirectorySort()
@@ -17,6 +18,8 @@ void DirectorySort::sort_directory(const std::string path) {
 
     if (! std::filesystem::is_directory(directory))
     {
+        //TODO LOGER
+        std::cout << "NOT directory : " << directory <<std::endl;
         throw NOT_DIRECTORY;
         return; 
     }
@@ -31,16 +34,34 @@ void DirectorySort::sort_directory(const std::string path) {
     catch(const int code_err )
     {
         //TODO LOGER
-        std::cerr << "HASNT LOCAL CONFIG FILE. " << code_err << '\n';
+        std::cout << "HASNT LOCAL CONFIG FILE. " << code_err << '\n';
         configSort = get_default_archirecture_directory();
     }
+    //Прохожусь по всем типам сортировки 
+    for (const auto configType : configSort)
+    {
+        std::string typeDirectory = path + "/" +configType.directory_name;
+        //TODO LOGER
+        std::cout << "Create path : " << typeDirectory << std::endl;
+        if(!std::filesystem::create_directory(typeDirectory))
+        {
+            //Cant create directory
+            //TODO LOGER
+            std::cout << "Cant create directory " << typeDirectory << std::endl;
+            continue;
+        }
+        std::cout << "OK\n";
+        
+        
+    }
     
-    
+
 
 }
 
 void DirectorySort::create_default_architecture_directory() {
     //TODO 
+    std::cout << "Creating default arch dir\n";
     std::ofstream default_file_config(NAME_DEFAULT_CONFIG);
     default_file_config << "" << std::endl;
     default_file_config.close();
@@ -48,9 +69,11 @@ void DirectorySort::create_default_architecture_directory() {
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directory() {
     //TODO LOGER
+    std::cout << "getting def config file\n";
     std::ifstream configFile(NAME_DEFAULT_CONFIG);
     if(!configFile.is_open())
     {
+        std::cout << "Cant open config file\n";
         throw CANT_OPEN_DEF_CONFIG_FILE;
         //create_default_architecture_directory();
     }
@@ -68,15 +91,20 @@ void DirectorySort::create_local_architecture_directory() {
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(const std::filesystem::path& dir) {
     //TODO LOGER
+    std::cout << "Getting local config file\n"<< dir << "\n";
     for(const auto& entry : std::filesystem::directory_iterator(dir))
     {
         if (entry.path().filename() == NAME_LOCAL_CONFIG) 
         {
+            //TODO LOGER 
+            std::cout << "Find local config : " << entry.path().filename()<<std::endl;
+
             std::ifstream configFile(entry.path());
             if(!configFile.is_open())
             {
                 throw CANT_OPEN_CONFIG_FILE;
             }
+
             //Read data from file to string
             std::string configFileData;
             std::stringstream bufferData;
@@ -88,6 +116,7 @@ std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(
             
         }
     }
+    
     throw LOCAL_CONFIG_DOEST_EXIST;
 
 }
