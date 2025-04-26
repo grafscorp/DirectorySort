@@ -30,5 +30,5 @@ add_library(DirectorySortLib
     ${JSON_INCLUDES}
 )
 
-target_include_directories(DirectorySortLib PRIVATE ${DirectorySortIncludePath} ${JSON_INCLUDES})
+target_include_directories(DirectorySortLib PUBLIC ${DirectorySortIncludePath} ${JSON_INCLUDES})
 
