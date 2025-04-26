@@ -9,6 +9,8 @@ ConfigParser::~ConfigParser() {
 }
 
 std::vector<DirectoryTypeConfig> ConfigParser::parse(const std::string data) {
+    //TODO LOGER
+    std::cout<< "Start parsing : " << data <<std::endl;
     nlohmann::json resJson = nlohmann::json::parse(data);
     
     std::vector<DirectoryTypeConfig> ConfigDatas;
@@ -23,14 +25,22 @@ std::vector<DirectoryTypeConfig> ConfigParser::parse(const std::string data) {
         typeConfig.directory_name =  typeObj.at(2)["name_directory"]; //Get Directory Name
         nlohmann::json formats = typeObj.at(0)["formats"];//Get Item Type's Formats 
 
-        for (int i = 0; i < formats.size(); i++) 
+        for (size_t i = 0; i < formats.size(); i++) 
         {
             typeConfig.formats .push_back(formats.at(i));
         }
         if(typeConfig.is_empty()) continue;
         
         ConfigDatas.push_back(typeConfig);
+        //TODO LOGER
+        std::cout << "Added type " << typeConfig.directory_name << std::endl;
     }
-    if(ConfigDatas.empty()) throw NOT_VALID_DATA;
+    if(ConfigDatas.empty()) {
+        //TODO LOGER
+        std::cout << "Empty data\n";
+        throw EMPTY_DATA;
+    }
+    //TODO LOGER
+    std::cout <<"Parse success\n";
     return ConfigDatas;
 }
