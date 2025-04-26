@@ -7,7 +7,7 @@
 #include <DirectoryTypeConfig.hpp>
 
 #define NOT_VALID_DATA 1310
-
+#define EMPTY_DATA 1300
 class ConfigParser
 {
 private:
