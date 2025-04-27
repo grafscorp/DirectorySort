@@ -12,7 +12,7 @@ DirectorySort::~DirectorySort()
 }
 
 void DirectorySort::sort_directory(const std::string path) {
-    
+    //Сортируемая директория
     std::filesystem::path directory(path);
 
 
@@ -45,14 +45,49 @@ void DirectorySort::sort_directory(const std::string path) {
         std::cout << "Create path : " << typeDirectory << std::endl;
         
         //TODO Сделать проверку если существует директория
-        if(!std::filesystem::create_directory(typeDirectory))
-        {
-            //Cant create directory
+        
+        if (!std::filesystem::exists(typeDirectory)){
             //TODO LOGER
-            std::cout << "Cant create directory " << typeDirectory << std::endl;
-            continue;
+            std::cout << "Directory isnt exist\n";
+            if(!std::filesystem::create_directory(typeDirectory))
+            {
+                //Cant create directory
+                //TODO LOGER
+                std::cout << "Cant create directory " << typeDirectory << std::endl;
+                continue;
+            }
         }
         //Поиск нужных файлов и их перемещение в нужную директорию
+        //TODO LOGER
+        std::cout << "Start moving\n";
+        //Прохожусь по нужным форматам из Конфиг Файла
+        for (const auto &formatConfig: configType.formats)
+        {
+
+            if(formatConfig == "*"){
+                continue;
+            }
+            //Прохожусь по файлам из директории
+            for (const auto &originFile : std::filesystem::directory_iterator(directory))
+            {
+                //TODO
+
+                if(!originFile.is_regular_file()) continue;
+
+                if (originFile.path().extension() == formatConfig )
+                {
+                    
+                    //Moving file
+                    std::filesystem::rename(originFile.path(), );
+                    //TODO LOGER
+                    std::cout << "File  : " << originFile.path();
+                    std::cout << ", moved to : " << typeDirectory << "/" << originFile.path().filename() << std::endl; 
+                }
+            }
+        }
+        
+
+
         
         
     }
@@ -96,6 +131,8 @@ std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(
     std::cout << "Getting local config file\n"<< dir << "\n";
     for(const auto& entry : std::filesystem::directory_iterator(dir))
     {
+        if(!entry.is_regular_file()) continue;
+
         if (entry.path().filename() == NAME_LOCAL_CONFIG) 
         {
             //TODO LOGER 
