@@ -41,14 +41,15 @@ void DirectorySort::sort_directory(const std::string path) {
     {
         //Директория, которая создается для переменщения определенных файлов
         std::string typeDirectory = path + "/" +configType.directory_name;
-        //TODO LOGER
-        std::cout << "Create path : " << typeDirectory << std::endl;
+
         
         //TODO Сделать проверку если существует директория
         
         if (!std::filesystem::exists(typeDirectory)){
             //TODO LOGER
             std::cout << "Directory isnt exist\n";
+                    //TODO LOGER
+        std::cout << "Create path : " << typeDirectory << std::endl;
             if(!std::filesystem::create_directory(typeDirectory))
             {
                 //Cant create directory
@@ -59,7 +60,7 @@ void DirectorySort::sort_directory(const std::string path) {
         }
         //Поиск нужных файлов и их перемещение в нужную директорию
         //TODO LOGER
-        std::cout << "Start moving\n";
+        std::cout << "Start moving of " << configType.directory_name << std::endl;
         //Прохожусь по нужным форматам из Конфиг Файла
         for (const auto &formatConfig: configType.formats)
         {
@@ -76,16 +77,19 @@ void DirectorySort::sort_directory(const std::string path) {
 
                 if (originFile.path().extension() == formatConfig )
                 {
-                    
+                    //Полный путь к отсортированному файлому 
+                    std::string sortedFile(typeDirectory +"/"+originFile.path().filename().string());
                     //Moving file
-                    std::filesystem::rename(originFile.path(), );
+                    std::filesystem::rename(originFile.path(),sortedFile );
                     //TODO LOGER
                     std::cout << "File  : " << originFile.path();
                     std::cout << ", moved to : " << typeDirectory << "/" << originFile.path().filename() << std::endl; 
                 }
             }
+
         }
-        
+        //TODO LOGER 
+        std::cout << "Stop moving of  " << configType.directory_name << std::endl;
 
 
         
