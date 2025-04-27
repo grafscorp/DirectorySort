@@ -2,9 +2,9 @@
     [
         {
             "formats": [
-                "*.png",
-                "*.jpeg",
-                "*.jpg"
+                ".png",
+                ".jpeg",
+                ".jpg"
             ]
         },
         {
@@ -17,8 +17,8 @@
     [
         {
             "formats": [
-                "*.mp4",
-                "*.wav"
+                ".mp4",
+                ".wav"
             ]
         },
         {
