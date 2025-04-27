@@ -36,6 +36,12 @@ void DirectorySort::sort_directory(const std::string path) {
         std::cout << "HASNT LOCAL CONFIG FILE. " << code_err << '\n';
         configSort = get_default_archirecture_directory();
     }
+    if(configSort.empty())
+    {
+        //TODO LOGER
+        std::cout << "Config File is invalid\n";
+        return;
+    }
     //Прохожусь по всем типам сортировки 
     for (const auto configType : configSort)
     {
@@ -95,14 +101,14 @@ void DirectorySort::sort_directory(const std::string path) {
         
         
     }
-    
+    std::cout << "Sorted.\n";
 
 
 }
 
 void DirectorySort::create_default_architecture_directory() {
     //TODO 
-    std::cout << "Creating default arch dir\n";
+    std::cout << "Creating default config file\n";
     std::ofstream default_file_config(NAME_DEFAULT_CONFIG);
     default_file_config << "" << std::endl;
     default_file_config.close();
@@ -126,10 +132,28 @@ std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directo
     return configParser->parse(configFileData);
 }
 
-void DirectorySort::create_local_architecture_directory() {
-    //TODO
+void DirectorySort::create_local_architecture_directory(const std::string& localPath) {
+    //TODO LOGER
+    std::cout << "Creating local config file on base default config file.\n";
+    std::string localFilePath = localPath;
+    std::string nameLocalFile = NAME_LOCAL_CONFIG;
+    localFilePath += "/" + nameLocalFile;
+    std::cout << localFilePath;
+    std::ofstream default_file_config(localFilePath);
+    default_file_config << CONTENT_DEFAULT_CONFIG << std::endl;
+    default_file_config.close();
 }
-
+void DirectorySort::create_local_architecture_directory(const std::string& localPath, const std::string& dataConfig) {
+    //TODO LOGER
+    std::cout << "Creating local config file on base user data.\n" ;
+    std::string localFilePath = localPath;
+    std::string nameLocalFile = NAME_LOCAL_CONFIG;
+    localFilePath += "/" + nameLocalFile;
+    std::cout << localFilePath;
+    std::ofstream default_file_config(localFilePath);
+    default_file_config << dataConfig << std::endl;
+    default_file_config.close();
+}
 std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(const std::filesystem::path& dir) {
     //TODO LOGER
     std::cout << "Getting local config file\n"<< dir << "\n";
