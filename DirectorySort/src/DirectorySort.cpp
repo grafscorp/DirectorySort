@@ -16,7 +16,7 @@ void DirectorySort::sort_directory(const std::string path) {
     std::filesystem::path directory(path);
 
 
-    if (! std::filesystem::is_directory(directory))
+    if (! std::filesystem::is_directory(directory) || !std::filesystem::exists(directory))
     {
         //TODO LOGER
         std::cout << "NOT directory : " << directory <<std::endl;
