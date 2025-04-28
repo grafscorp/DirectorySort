@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(DirectorySortLib VERSION 0.1.0 LANGUAGES C CXX)
+
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib )
+
+
+
 set(CMAKE_CXX_STANDARD 17)
 set(DirectorySortIncludePath include)
 set(DirectorySortSourcePath src)
