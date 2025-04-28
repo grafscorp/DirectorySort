@@ -11,7 +11,8 @@ DirectorySort::~DirectorySort()
     delete configParser;
 }
 
-void DirectorySort::sort_directory(const std::string path) {
+//Сортировка директории, принимает в качестве аргумента uri директории, правила сортировки берёт из локального файла конфигурации(create_local_architecture_directory), если такого нет то правила берёт из стандартного файла конфигурации
+void DirectorySort::sort_directory(const std::string& path) {
     //Сортируемая директория
     std::filesystem::path directory(path);
 
@@ -25,23 +26,12 @@ void DirectorySort::sort_directory(const std::string path) {
     }
 
     //All config rules
-    std::vector<DirectoryTypeConfig> configSort;
-    try
+    std::vector<DirectoryTypeConfig> configSort = get_local_architecture_diretory(directory);
+    if (configSort.empty())
     {
-        configSort = get_local_architecture_diretory(directory);
-    }
-    catch(const int code_err )
-    {
-        //TODO LOGER
-        std::cout << "HASNT LOCAL CONFIG FILE. " << code_err << '\n';
         configSort = get_default_archirecture_directory();
     }
-    if(configSort.empty())
-    {
-        //TODO LOGER
-        std::cout << "Config File is invalid\n";
-        return;
-    }
+
     //Прохожусь по всем типам сортировки 
     for (const auto configType : configSort)
     {
@@ -49,13 +39,11 @@ void DirectorySort::sort_directory(const std::string path) {
         std::string typeDirectory = path + "/" +configType.directory_name;
 
         
-        //TODO Сделать проверку если существует директория
-        
         if (!std::filesystem::exists(typeDirectory)){
             //TODO LOGER
             std::cout << "Directory isnt exist\n";
                     //TODO LOGER
-        std::cout << "Create path : " << typeDirectory << std::endl;
+            std::cout << "Create path : " << typeDirectory << std::endl;
             if(!std::filesystem::create_directory(typeDirectory))
             {
                 //Cant create directory
@@ -105,15 +93,15 @@ void DirectorySort::sort_directory(const std::string path) {
 
 
 }
-
+//Создает файл конфигурации, который будет использоваться по умолчанию 
 void DirectorySort::create_default_architecture_directory() {
     //TODO 
     std::cout << "Creating default config file\n";
     std::ofstream default_file_config(NAME_DEFAULT_CONFIG);
-    default_file_config << "" << std::endl;
+    default_file_config << CONTENT_DEFAULT_CONFIG << std::endl;
     default_file_config.close();
 }
-
+//Получить данные из файла конфигурации по умолчанию
 std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directory() {
     //TODO LOGER
     std::cout << "getting def config file\n";
@@ -124,15 +112,23 @@ std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directo
         throw CANT_OPEN_DEF_CONFIG_FILE;
         //create_default_architecture_directory();
     }
+
+    std::vector<DirectoryTypeConfig> sortTypes;
+
     std::string configFileData;
     std::stringstream bufferData;
     bufferData << configFile.rdbuf();
     configFileData = bufferData.str();
     configFile.close();
-    return configParser->parse(configFileData);
+    sortTypes =  configParser->parse(configFileData);
+    if (sortTypes.empty()) throw INVALID_DEFAULT_CONFIG_FILE;
+    return sortTypes;
 }
 
-void DirectorySort::create_local_architecture_directory(const std::string& localPath) {
+//Создать локальный файл конфигурации на базе стандартного файла конфигурации.(При сортировке директории будет сортироваться по этому файлу)
+void DirectorySort::create_local_architecture_directory(const std::string &localPath)
+{
+    //TODO Переделать чтобы данные брал из файла, если такой есть
     //TODO LOGER
     std::cout << "Creating local config file on base default config file.\n";
     std::string localFilePath = localPath;
@@ -143,6 +139,7 @@ void DirectorySort::create_local_architecture_directory(const std::string& local
     default_file_config << CONTENT_DEFAULT_CONFIG << std::endl;
     default_file_config.close();
 }
+//Создать локальный файл конфигурации, на основе пользовательских данных.(При сортировке директории будет сортироваться по этому файлу)
 void DirectorySort::create_local_architecture_directory(const std::string& localPath, const std::string& dataConfig) {
     //TODO LOGER
     std::cout << "Creating local config file on base user data.\n" ;
@@ -154,9 +151,11 @@ void DirectorySort::create_local_architecture_directory(const std::string& local
     default_file_config << dataConfig << std::endl;
     default_file_config.close();
 }
+//Получить данные из локального файла конфигурации
 std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(const std::filesystem::path& dir) {
     //TODO LOGER
     std::cout << "Getting local config file\n"<< dir << "\n";
+    std::vector<DirectoryTypeConfig> sortTypes;
     for(const auto& entry : std::filesystem::directory_iterator(dir))
     {
         if(!entry.is_regular_file()) continue;
@@ -179,11 +178,11 @@ std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(
             configFileData = bufferData.str();
             configFile.close();
             
-            return configParser->parse(configFileData);
+            sortTypes = configParser->parse(configFileData);
             
         }
     }
     
-    throw LOCAL_CONFIG_DOEST_EXIST;
+    return sortTypes;
 
 }
