@@ -34,14 +34,19 @@ public:
     ~DirectorySort();
 
 public:
+    //Сортировка директории, принимает в качестве аргумента uri директории, правила сортировки берёт из локального файла конфигурации(create_local_architecture_directory), если такого нет то правила берёт из стандартного файла конфигурации
     void sort_directory(const std::string& path);
+    //Создать локальный файл конфигурации на базе стандартного файла конфигурации.(При сортировке директории будет сортироваться по этому файлу)
     void create_local_architecture_directory(const std::string& localPath);
+    //Создать локальный файл конфигурации, на основе пользовательских данных.(При сортировке директории будет сортироваться по этому файлу)
     void create_local_architecture_directory(const std::string& localPath, const std::string& dataConfig);
 
 protected:
+    //Создает файл конфигурации, который будет использоваться по умолчанию 
     void create_default_architecture_directory();
+    //Получить данные из файла конфигурации по умолчанию
     std::vector<DirectoryTypeConfig> get_default_archirecture_directory();
-    
+    //Получить данные из локального файла конфигурации
     std::vector<DirectoryTypeConfig> get_local_architecture_diretory(const std::filesystem::path& dir);
 
 private:

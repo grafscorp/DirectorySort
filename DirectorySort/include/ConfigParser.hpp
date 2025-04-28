@@ -8,6 +8,8 @@
 
 #define NOT_VALID_DATA 1310
 #define EMPTY_DATA 1300
+
+//Парсер файлов конфигурации
 class ConfigParser
 {
 private:
