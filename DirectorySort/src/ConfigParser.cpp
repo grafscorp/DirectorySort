@@ -10,7 +10,7 @@ ConfigParser::~ConfigParser() {
 
 std::vector<DirectoryTypeConfig> ConfigParser::parse(const std::string data) {
     //TODO LOGER
-    std::cout<< "Start parsing : " << data <<std::endl;
+    std::cout<< "Start parsing... " <<std::endl;
     nlohmann::json resJson = nlohmann::json::parse(data);
     
     std::vector<DirectoryTypeConfig> ConfigDatas;
