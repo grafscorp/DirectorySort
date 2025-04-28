@@ -14,6 +14,7 @@
 #define LOCAL_CONFIG_DOEST_EXIST 1050
 #define CANT_OPEN_CONFIG_FILE 2050
 #define CANT_OPEN_DEF_CONFIG_FILE 2040
+#define INVALID_DEFAULT_CONFIG_FILE 2010
 #pragma endregion ErrorCodes
 
 #define NAME_DEFAULT_CONFIG "default_config.json"
@@ -33,7 +34,7 @@ public:
     ~DirectorySort();
 
 public:
-    void sort_directory(const std::string path);
+    void sort_directory(const std::string& path);
     void create_local_architecture_directory(const std::string& localPath);
     void create_local_architecture_directory(const std::string& localPath, const std::string& dataConfig);
 
