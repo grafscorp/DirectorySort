@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 #link_directories(DirectorySort/lib)
 
-link_directories(DirectorySort/out/build/DirectorySortLib/Debug)
+link_directories(DirectorySort/lib/Release)
 
 add_executable(DirectorySort main.cpp)
 
