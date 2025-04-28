@@ -104,7 +104,12 @@ void DirectorySort::create_default_architecture_directory() {
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directory() {
     //TODO LOGER
-    std::cout << "getting def config file\n";
+    std::cout << "Getting default config file\n";
+    if(!std::filesystem::exists(NAME_DEFAULT_CONFIG))
+    {
+        //TODO LOGER
+        create_default_architecture_directory();
+    }
     std::ifstream configFile(NAME_DEFAULT_CONFIG);
     if(!configFile.is_open())
     {
