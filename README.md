@@ -10,7 +10,7 @@ The project consists of a library responsible for sorting and all child objects,
 Use: \
 ```cmake -S . -B build``` \
 ```cmake --build build ``` \
-For building debig version*
+For building debug version*
 
 # Use
 
