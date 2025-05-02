@@ -20,7 +20,7 @@
 #define NAME_DEFAULT_CONFIG "default_config.json"
 #define NAME_LOCAL_CONFIG ".ds_config.json"
 
-#define CONTENT_DEFAULT_CONFIG "[[{\"formats\": [\".webp\",\".png\",\".jpeg\",\".jpg\"]},{\"exceptions\": []},{\"name_directory\": \"Images\"}],[{\"formats\": [\".mp4\",\".wav\"]},{\"exceptions\": []},{\"name_directory\": \"Videos\"}]]"
+#define CONTENT_DEFAULT_CONFIG "[[{\"formats\":[\".webp\",\".png\",\".jpeg\",\".jpg\",\".gif\",\".bmp\"]},{\"exceptions\":[]},{\"name_directory\":\"Images\"}],[{\"formats\":[\".mp4\",\".avi\"]},{\"exceptions\":[]},{\"name_directory\":\"Videos\"}],[{\"formats\":[\".txt\",\".doc\",\".rtf\"]},{\"exceptions\":[]},{\"name_directory\":\"Text\"}],[{\"formats\":[\".wav\",\".midi\",\".mp3\",\".wma\"]},{\"exceptions\":[]},{\"name_directory\":\"Sounds\"}],[{\"formats\":[\".rar\",\".zip\",\".tgz\",\".arj\"]},{\"exceptions\":[]},{\"name_directory\":\"Archive\"}]]"
 
 
 /*
