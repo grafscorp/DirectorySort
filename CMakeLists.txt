@@ -6,7 +6,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 #link_directories(DirectorySort/lib)
 
-link_directories(DirectorySort/lib/Release)
+add_subdirectory(DirectorySort)
+
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    link_directories(DirectorySort/lib/Debug)
+else()
+    link_directories(DirectorySort/lib/Release)
+endif()
+
+
 
 add_executable(DirectorySort main.cpp)
 
