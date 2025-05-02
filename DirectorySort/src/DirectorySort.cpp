@@ -104,7 +104,7 @@ void DirectorySort::create_default_architecture_directory() {
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_default_archirecture_directory() {
     //TODO LOGER
-    std::cout << "Getting default config file\n";
+    std::cout << "Looking default config file\n";
     if(!std::filesystem::exists(NAME_DEFAULT_CONFIG))
     {
         //TODO LOGER
@@ -159,7 +159,7 @@ void DirectorySort::create_local_architecture_directory(const std::string& local
 
 std::vector<DirectoryTypeConfig> DirectorySort::get_local_architecture_diretory(const std::filesystem::path& dir) {
     //TODO LOGER
-    std::cout << "Getting local config file\n"<< dir << "\n";
+    std::cout << "Looking local config file\n"<< dir << "\n";
     std::vector<DirectoryTypeConfig> sortTypes;
     for(const auto& entry : std::filesystem::directory_iterator(dir))
     {
