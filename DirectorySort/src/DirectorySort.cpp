@@ -50,6 +50,9 @@ void DirectorySort::sort_directory(const std::string& path) {
             if(formatConfig == "*"){
                 continue;
             }
+
+            bool isDirectoryCreated = false;
+
             //Прохожусь по файлам из директории
             for (const auto &originFile : std::filesystem::directory_iterator(directory))
             {
@@ -58,18 +61,25 @@ void DirectorySort::sort_directory(const std::string& path) {
 
                 if (originFile.path().extension() == formatConfig )
                 {
-                    //Создаю папку для данного типа
-                    if (!std::filesystem::exists(typeDirectory)){
+                    if (!isDirectoryCreated)
+                    {
+                        if (!std::filesystem::exists(typeDirectory)){
+                                    //TODO LOGER
+                            std::cout << "Create path : " << typeDirectory << std::endl;
+                            if(!std::filesystem::create_directory(typeDirectory))
+                            {
+                                //Cant create directory
                                 //TODO LOGER
-                        std::cout << "Create path : " << typeDirectory << std::endl;
-                        if(!std::filesystem::create_directory(typeDirectory))
-                        {
-                            //Cant create directory
-                            //TODO LOGER
-                            std::cout << "Cant create directory " << typeDirectory << std::endl;
-                            continue;
+                                std::cout << "Cant create directory " << typeDirectory << std::endl;
+                                continue;
+                            }else isDirectoryCreated = true;
+                        }else{
+                            isDirectoryCreated = true;
                         }
+
                     }
+                    //Создаю папку для данного типа
+
 
                     //Полный путь к отсортированному файлому 
                     std::string sortedFile(typeDirectory +"/"+originFile.path().filename().string());
